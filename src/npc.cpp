@@ -1110,117 +1110,167 @@ void npc::form_opinion(player *u)
 {
 // FEAR
  if (u->weapon.is_gun()) {
-  if (weapon.is_gun())
-   op_of_u.fear += 2;
-  else
-   op_of_u.fear += 6;
- } else if (u->weapon.type->melee_dam >= 12 || u->weapon.type->melee_cut >= 12)
+  if (weapon.is_gun()) {
+   op_of_u.fear += 6; /* fear with weapon(gun) */
+  } else {
+   op_of_u.fear += 2; /* fear without weapon(gun)*/
+ } else { 
+  if (u->weapon.type->melee_dam >= 12 || u->weapon.type->melee_cut >= 12) {
+  op_of_u.fear += 3; /* fear with weapon (melee)*/
+ } else {
+  if (u->unarmed_attack()) { // Unarmed
+  op_of_u.fear -= 2; /* removes Fear if no weapon */
+ }//1
+ }//2
+ }//3
+ }//4
+ /* generate Fear from Strength (Dem muscles :3) */
+ if (u->str_max >= 16){
   op_of_u.fear += 2;
- else if (u->unarmed_attack()) // Unarmed
-  op_of_u.fear -= 3;
-
- if (u->str_max >= 16)
-  op_of_u.fear += 2;
- else if (u->str_max >= 12)
+ } else {
+  if (u->str_max >= 12){
   op_of_u.fear += 1;
- else if (u->str_max <= 5)
+ } else { 
+  if (u->str_max <= 5) {
   op_of_u.fear -= 1;
- else if (u->str_max <= 3)
+ } else { 
+  if (u->str_max <= 3){
   op_of_u.fear -= 3;
-
+}//1
+}//2
+}//3
+}//4
  for (int i = 0; i < num_hp_parts; i++) {
-  if (u->hp_cur[i] <= u->hp_max[i] / 2)
+  if (u->hp_cur[i] <= u->hp_max[i] / 2) {
    op_of_u.fear--;
-  if (hp_cur[i] <= hp_max[i] / 2)
+  }
+  if (hp_cur[i] <= hp_max[i] / 2){
    op_of_u.fear++;
+  }
  }
 
  if (has_trait("SAPIOVORE")) {
     op_of_u.fear += 10; // Sapiovores = Scary
  }
- if (u->has_trait("PRETTY"))
+ if (u->has_trait("PRETTY")){
   op_of_u.fear += 1;
- else if (u->has_trait("BEAUTIFUL"))
+ }else{
+  if (u->has_trait("BEAUTIFUL")){
   op_of_u.fear += 2;
- else if (u->has_trait("BEAUTIFUL2"))
+ }else{ 
+  if (u->has_trait("BEAUTIFUL2")){
   op_of_u.fear += 3;
- else if (u->has_trait("BEAUTIFUL3"))
+ }else{ 
+  if (u->has_trait("BEAUTIFUL3")){
   op_of_u.fear += 4;
- else if (u->has_trait("UGLY"))
+ }else{ 
+  if (u->has_trait("UGLY")) {
   op_of_u.fear -= 1;
- else if (u->has_trait("DEFORMED"))
+ }else{ 
+  if (u->has_trait("DEFORMED")){
   op_of_u.fear += 3;
- else if (u->has_trait("DEFORMED2"))
+ }else{ 
+  if (u->has_trait("DEFORMED2")){
   op_of_u.fear += 6;
- else if (u->has_trait("DEFORMED3"))
+ }else{ 
+  if (u->has_trait("DEFORMED3")){
   op_of_u.fear += 9;
- if (u->has_trait("TERRIFYING"))
+ }//1
+ }//2
+ }//3
+ }//4
+ }//5
+ }//6
+ }//7
+ }//8
+ if (u->has_trait("TERRIFYING")){
   op_of_u.fear += 6;
-
- if (u->stim > 20)
+ }
+ if (u->stim > 20){
   op_of_u.fear++;
-
- if (u->has_disease("drunk"))
+ }
+ if (u->has_disease("drunk")){
   op_of_u.fear -= 2;
-
+ }
 // TRUST
- if (op_of_u.fear > 0)
+ if (op_of_u.fear > 0){
   op_of_u.trust -= 3;
- else
+ } else {
   op_of_u.trust += 1;
-
- if (u->weapon.is_gun())
+ }
+ 
+ if (u->weapon.is_gun()) {
   op_of_u.trust -= 2;
- else if (u->unarmed_attack())
+ } else {
+   if (u->unarmed_attack()) {
   op_of_u.trust += 2;
-
- if (u->has_disease("high"))
+   }
+ if (u->has_disease("high")) {
   op_of_u.trust -= 1;
- if (u->has_disease("drunk"))
+ }
+ if (u->has_disease("drunk")){
   op_of_u.trust -= 2;
- if (u->stim > 20 || u->stim < -20)
+ }
+ if (u->stim > 20 || u->stim < -20){
   op_of_u.trust -= 1;
- if (u->pkill > 30)
+ }
+ if (u->pkill > 30) {
   op_of_u.trust -= 1;
-
- if (u->has_trait("PRETTY"))
+ }
+ if (u->has_trait("PRETTY")) {
   op_of_u.trust += 1;
- else if (u->has_trait("BEAUTIFUL"))
+ } else {
+  if (u->has_trait("BEAUTIFUL")) {
   op_of_u.trust += 3;
- else if (u->has_trait("BEAUTIFUL2"))
+  }
+ } else {
+  if (u->has_trait("BEAUTIFUL2")){
   op_of_u.trust += 5;
- else if (u->has_trait("BEAUTIFUL3"))
+  
+ } else {
+  
+  if (u->has_trait("BEAUTIFUL3")){
   op_of_u.trust += 7;
- else if (u->has_trait("UGLY"))
+ } else { if (u->has_trait("UGLY")) {
   op_of_u.trust -= 1;
- else if (u->has_trait("DEFORMED"))
+ } else { if (u->has_trait("DEFORMED")) {
   op_of_u.trust -= 3;
- else if (u->has_trait("DEFORMED2"))
+ } else { if (u->has_trait("DEFORMED2")) {
   op_of_u.trust -= 6;
- else if (u->has_trait("DEFORMED3"))
+ } else { if (u->has_trait("DEFORMED3")){
   op_of_u.trust -= 9;
-
+ }
 // VALUE
  op_of_u.value = 0;
  for (int i = 0; i < num_hp_parts; i++) {
-  if (hp_cur[i] < hp_max[i] * .8)
+  if (hp_cur[i] < hp_max[i] * .8){
    op_of_u.value++;
+  }
  }
  decide_needs();
  for (int i = 0; i < needs.size(); i++) {
-  if (needs[i] == need_food || needs[i] == need_drink)
+  if (needs[i] == need_food || needs[i] == need_drink) {
    op_of_u.value += 2;
+  }
  }
-
+// if fear is less then bravery + 10 and
+//if fear minus aggresion is greater then -10 and trust is greater then -8
+//then npc will talk
+// else if fear minus 2 times aggression minus bravery is less then -30 then
+// npc will kill
+// else npc will flee
  if (op_of_u.fear < personality.bravery + 10 &&
-     op_of_u.fear - personality.aggression > -10 && op_of_u.trust > -8)
+     op_of_u.fear - personality.aggression > -10 && op_of_u.trust > -8) {
   attitude = NPCATT_TALK;
- else if (op_of_u.fear - 2 * personality.aggression - personality.bravery < -30)
+ } else { 
+  if (op_of_u.fear - 2 * personality.aggression - personality.bravery < -30){
   attitude = NPCATT_KILL;
- else
+ } else {
   attitude = NPCATT_FLEE;
 }
-
+}
+}
+}
 talk_topic npc::pick_talk_topic(player *u)
 {
  //form_opinion(u);
