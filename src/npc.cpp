@@ -1139,7 +1139,7 @@ void npc::form_opinion(player *u)
  if (has_trait("SAPIOVORE")) {
     op_of_u.fear += 10; // Sapiovores = Scary
  }
- /*switch for Fear traits */
+ /*switch for Fear traits. */
  switch(u->has_trait){
  case "PRETTY": op_of_u.fear += 1;
  case "BEAUTIFUL": op_of_u.fear += 2;
