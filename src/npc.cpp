@@ -1135,27 +1135,24 @@ void npc::form_opinion(player *u)
    op_of_u.fear++;
  }
 
+
  if (has_trait("SAPIOVORE")) {
     op_of_u.fear += 10; // Sapiovores = Scary
  }
- if (u->has_trait("PRETTY"))
-  op_of_u.fear += 1;
- else if (u->has_trait("BEAUTIFUL"))
-  op_of_u.fear += 2;
- else if (u->has_trait("BEAUTIFUL2"))
-  op_of_u.fear += 3;
- else if (u->has_trait("BEAUTIFUL3"))
-  op_of_u.fear += 4;
- else if (u->has_trait("UGLY"))
-  op_of_u.fear -= 1;
- else if (u->has_trait("DEFORMED"))
-  op_of_u.fear += 3;
- else if (u->has_trait("DEFORMED2"))
-  op_of_u.fear += 6;
- else if (u->has_trait("DEFORMED3"))
-  op_of_u.fear += 9;
- if (u->has_trait("TERRIFYING"))
-  op_of_u.fear += 6;
+ /*switch for Fear traits */
+ switch(u->has_trait){
+ case "PRETTY": op_of_u.fear += 1;
+ case "BEAUTIFUL": op_of_u.fear += 2;
+ case "BEAUTIFUL2": op_of_u.fear += 3;
+ case "BEAUTIFUL3": op_of_u.fear += 4;
+ case "UGLY": op_of_u.fear -= 1;
+ case "DEFORMED": op_of_u.fear += 3;
+ case "DEFORMED2": op_of_u.fear += 6;
+ case "DEFORMED3": op_of_u.fear += 9;
+ case "TERRIFYING": op_of_u.fear += 6;
+ default: break;
+ }
+
 
  if (u->stim > 20)
   op_of_u.fear++;
