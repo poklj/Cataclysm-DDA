@@ -1,3 +1,4 @@
+/* Begin imports */
 #include "player.h"
 #include "profession.h"
 #include "bionics.h"
@@ -50,19 +51,20 @@ stats player_stats;
 
 void game::init_morale()
 {
+ /*Here are the moral types	*/
     std::string tmp_morale_data[NUM_MORALE_TYPES] = {
-    "This is a bug (moraledata.h:moraledata)",
-    _("Enjoyed %i"),
+    "This is a bug (moraledata.h:moraledata)", //Bzzt Bzzt, call pest Control
+    _("Enjoyed %i"), // %i refrences the item enjoyed :D
     _("Enjoyed a hot meal"),
-    _("Music"),
+    _("Music"), 
     _("Enjoyed honey"),
-    _("Played Video Game"),
+    _("Played Video Game"), // Pew Pew
     _("Marloss Bliss"),
-    _("Mutagenic Anticipation"),
-    _("Good Feeling"),
+    _("Mutagenic Anticipation"), // Anticipating... a mutation?!?
+    _("Good Feeling"), // That warm fuzzy Feeling
     _("Supported"),
 
-    _("Nicotine Craving"),
+    _("Nicotine Craving"), //Craving's, Usually Negative
     _("Caffeine Craving"),
     _("Alcohol Craving"),
     _("Opiate Craving"),
@@ -72,7 +74,7 @@ void game::init_morale()
     _("Mutagen Craving"),
     _("Diazepam Craving"),
 
-    _("Disliked %i"),
+    _("Disliked %i"), // %i refrences the Item you Disliked
     _("Ate Human Flesh"),
     _("Ate Meat"),
     _("Ate Vegetables"),
@@ -80,21 +82,21 @@ void game::init_morale()
     _("Lactose Intolerance"),
     _("Ate Junk Food"),
     _("Wheat Allergy"),
-    _("Ate Indigestible Food"),
-    _("Wet"),
+    _("Ate Indigestible Food"), // *Choke*
+    _("Wet"), 
     _("Dried Off"),
     _("Cold"),
-    _("Hot"),
-    _("Bad Feeling"),
+    _("Hot"), 
+    _("Bad Feeling"), //It's Quiet... Too Quiet...
     _("Killed Innocent"),
-    _("Killed Friend"),
+    _("Killed Friend"), // Called by killing Friendly NPC's (?)
     _("Guilty about Killing"),
     _("Chimerical Mutation"),
     _("Fey Mutation"),
 
-    _("Moodswing"),
-    _("Read %i"),
-    _("Heard Disturbing Scream"),
+    _("Moodswing"), // :D Im so... Sadd T.T
+    _("Read %i"), //%i references the Thing you Read
+    _("Heard Disturbing Scream"), //Spooookie 
 
     _("Masochism"),
     _("Hoarder"),
@@ -103,7 +105,7 @@ void game::init_morale()
     _("Bad Tempered"),
     //~ You really don't like wearing the Uncomfy Gear
     _("Uncomfy Gear"),
-    _("Found kitten <3")
+    _("Found kitten <3") // Dawwwwww!!!
     };
     for (int i = 0; i < NUM_MORALE_TYPES; ++i) {
         morale_data[i]=tmp_morale_data[i];
@@ -112,7 +114,7 @@ void game::init_morale()
 
 player::player() : Character(), name("")
 {
- posx = 0;
+ posx = 0; 
  posy = 0;
  id = 0; // Player is 0. NPCs are different.
  view_offset_x = 0;
@@ -177,6 +179,7 @@ player::player() : Character(), name("")
    skillLevel(*aSkill).level(0);
  }
 
+// This is for your Body Temprature
  for (int i = 0; i < num_bp; i++) {
   temp_cur[i] = BODYTEMP_NORM;
   frostbite_timer[i] = 0;
@@ -245,33 +248,34 @@ player& player::operator= (const player & rhs)
 
  my_bionics = rhs.my_bionics;
 
- power_level = rhs.power_level;
- max_power_level = rhs.max_power_level;
+ power_level = rhs.power_level; // Your Bionic Power level
+ max_power_level = rhs.max_power_level; // Your Max Bionic Power level
 
- hunger = rhs.hunger;
- thirst = rhs.thirst;
- fatigue = rhs.fatigue;
- health = rhs.health;
+ hunger = rhs.hunger; // Your hunger
+ thirst = rhs.thirst; // Your thirst
+ fatigue = rhs.fatigue; // How tired you are
+ health = rhs.health; // Are you hurt (Health)
 
- underwater = rhs.underwater;
- oxygen = rhs.oxygen;
- next_climate_control_check=rhs.next_climate_control_check;
+ underwater = rhs.underwater; // Are you swimming with the fishies. Blub. Blub
+ oxygen = rhs.oxygen; // do you still have air
+ next_climate_control_check=rhs.next_climate_control_check; 
  last_climate_control_ret=rhs.last_climate_control_ret;
- known_traps = rhs.known_traps;
+ known_traps = rhs.known_traps; // What Dangers you know about
 
- recoil = rhs.recoil;
- driving_recoil = rhs.driving_recoil;
- scent = rhs.scent;
- dodges_left = rhs.dodges_left;
- blocks_left = rhs.blocks_left;
+ recoil = rhs.recoil; // Did you just fire/reload a gun
+ driving_recoil = rhs.driving_recoil; //did you stomp on the brakes/floor it
+ scent = rhs.scent; //I can smell you... im creeping around
+ dodges_left = rhs.dodges_left; // Can you dodge anymore
+ blocks_left = rhs.blocks_left; // Can you block anymore
 
  stim = rhs.stim;
- pkill = rhs.pkill;
- radiation = rhs.radiation;
+ pkill = rhs.pkill; // Did you eat dem painkillas
+ radiation = rhs.radiation; // Quick get the Radaway
 
- cash = rhs.cash;
- movecounter = rhs.movecounter;
+ cash = rhs.cash; // Dah Moneh $$$
+ movecounter = rhs.movecounter; // Your speed
 
+/*Your limbs HP*/
  for (int i = 0; i < num_hp_parts; i++)
   hp_cur[i] = rhs.hp_cur[i];
 
@@ -340,6 +344,7 @@ void player::pick_name()
 
 std::string player::disp_name(bool possessive)
 {
+	// This returns your name
     if (!possessive) {
         if (is_player()) {
             return _("you");
@@ -862,6 +867,7 @@ void player::update_bodytemp()
         for ( std::vector<item>::iterator afloor_item = floor_item.begin() ;
         afloor_item != floor_item.end() ;
         ++afloor_item) {
+			// checks to see if the item is armor
             if ( !afloor_item->is_armor() ) {
                 continue;
             }
@@ -880,7 +886,7 @@ void player::update_bodytemp()
         vehicle *veh = g->m.veh_at (posx, posy, vpart);
         if      (furn_at_pos == f_bed)
         {
-            floor_bedding_warmth += 1000;
+            floor_bedding_warmth += 1000; 
         }
         else if (furn_at_pos == f_makeshift_bed ||
                  furn_at_pos == f_armchair ||
@@ -1231,6 +1237,7 @@ void player::update_bodytemp()
             if (disease_intensity("frostbite", false, (body_part)i) < 2
                 &&  (i == bp_mouth || i == bp_hands || i == bp_feet))
             {
+			//%s represents the Body part that is affected
                 add_msg(m_bad, (i == bp_mouth ? _("Your %s hardens from the frostbite!") : _("Your %s harden from the frostbite!")), body_part_name(body_part(i), -1).c_str());
             }
             else if (frostbite_timer[i] >= 120 && g->get_temperature() < 32)
@@ -1238,7 +1245,7 @@ void player::update_bodytemp()
                 add_disease("frostbite", 1, false, 1, 2, 0, 1, (body_part)i, -1);
                 // Warning message for the player
                 if (!has_disease("frostbite", (body_part)i))
-                {
+                {	
                     add_msg(m_bad, _("You lose sensation in your %s."),
                         body_part_name(body_part(i), -1).c_str());
                 }
@@ -1332,7 +1339,7 @@ void player::recalc_speed_bonus()
         }
         mod_speed_bonus(morale_bonus);
     }
-
+	// Radiation penalty
     if (radiation >= 40) {
         int rad_penalty = radiation / 40;
         if (rad_penalty > 20) {
@@ -1340,16 +1347,17 @@ void player::recalc_speed_bonus()
         }
         mod_speed_bonus(-rad_penalty);
     }
-
+	// Thirst penalty
     if (thirst > 40) {
         mod_speed_bonus(-int((thirst - 40) / 10));
     }
+	// Hunger penalty
     if (hunger > 100) {
         mod_speed_bonus(-int((hunger - 100) / 10));
     }
 
     mod_speed_bonus(stim > 40 ? 40 : stim);
-
+	// illness penalty
     for (int i = 0; i < illness.size(); i++) {
         mod_speed_bonus(disease_speed_boost(illness[i]));
     }
